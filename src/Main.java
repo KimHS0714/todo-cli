@@ -1,15 +1,17 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner todoSc = new Scanner(System.in);
-        ArrayList<String> todos = new ArrayList<>();
+        ArrayList<Todo> todos = new ArrayList<>();
 
         System.out.println("================================");
         System.out.println("📝 할일 관리 프로그램에 오신 것을 환영합니다!");
         System.out.println("================================");
 
-        todos: while (true) {
+        todos:
+        while (true) {
             System.out.println("\n📋 멋진 메뉴를 선택하세요:");
             System.out.println("1. ➕ 할일 추가");
             System.out.println("2. 📃 할일 목록 보기");
@@ -21,30 +23,30 @@ public class Main {
             switch (choice) {
                 case "1":
                     System.out.print("📝 새로운 할일을 입력하세요: ");
-                    String todo = todoSc.nextLine();
-                    todos.add(todo);
+                    String todoDescription = todoSc.nextLine();
+                    Todo item = new Todo(todoDescription);
+                    todos.add(item);
+
                     break;
                 case "2":
-                    for (String aaa : todos) {
-                        if (aaa == null) {
-                            break;
-                        } else {
-                            System.out.println(aaa);
-                        }
+                    for (Todo todotodo : todos) {
+                        System.out.println(todotodo);
                     }
                     break;
-                case  "3":
-                    // 완료되면 Todos에서 선택된거 하나 삭제하기
+                case "3":
+                    // 완료되면 Todos 에서 선택된거 하나 삭제하기
                     System.out.println("어떤 할일을 완료하였나요?");
                     String completeTodo = todoSc.nextLine();
                     int completeTodoInt = Integer.parseInt(completeTodo);
 
-                    if(completeTodoInt >= todos.size() || completeTodoInt < 0) {
+                    if (completeTodoInt >= todos.size() || completeTodoInt < 0) {
                         System.out.println("올바른 값을 입력하세요.");
                         continue;
                     }
 
-                    todos.remove(completeTodoInt);
+                    Todo todo = todos.get(completeTodoInt);
+                    todo.setCompleted(true);
+
                     break;
                 case "4":
                     break todos;
