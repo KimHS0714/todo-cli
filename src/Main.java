@@ -1,62 +1,13 @@
-import java.util.ArrayList;
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
-        Scanner todoSc = new Scanner(System.in);
-        ArrayList<Todo> todos = new ArrayList<>();
-
-        System.out.println("================================");
-        System.out.println("📝 할일 관리 프로그램에 오신 것을 환영합니다!");
-        System.out.println("================================");
-
-        todos:
-        while (true) {
-            System.out.println("\n📋 멋진 메뉴를 선택하세요:");
-            System.out.println("1. ➕ 할일 추가");
-            System.out.println("2. 📃 할일 목록 보기");
-            System.out.println("3. 🔄 할일 상태 변경");
-            System.out.println("4. 🚪 프로그램 종료");
-            System.out.print("선택: ");
-            String choice = todoSc.nextLine();
-
-            switch (choice) {
-                case "1":
-                    System.out.print("📝 새로운 할일을 입력하세요: ");
-                    String todoDescription = todoSc.nextLine();
-                    Todo item = new Todo(todoDescription);
-                    todos.add(item);
-
-                    break;
-                case "2":
-                    for (Todo todotodo : todos) {
-                        System.out.println(todotodo);
-                    }
-                    break;
-                case "3":
-                    // 완료되면 Todos 에서 선택된거 하나 삭제하기
-                    System.out.println("어떤 할일을 완료하였나요?");
-                    String completeTodo = todoSc.nextLine();
-                    int completeTodoInt = Integer.parseInt(completeTodo);
-
-                    if (completeTodoInt >= todos.size() || completeTodoInt < 0) {
-                        System.out.println("올바른 값을 입력하세요.");
-                        continue;
-                    }
-
-                    Todo todo = todos.get(completeTodoInt);
-                    todo.setCompleted(true);
-
-                    break;
-                case "4":
-                    break todos;
-                default:
-                    System.out.println("❌ 잘못된 선택입니다. 1-4 사이의 숫자를 입력해주세요.\n");
-            }
+        ITodoUI ui;
+        
+        if (args.length > 0 && "fancy".equalsIgnoreCase(args[0])) {
+            ui = new FancyTodoUI();
+        } else {
+            ui = new BasicTodoUI();
         }
-
-//        System.out.println("================================");
-//        System.out.println("안녕히가세요.");
-//        System.out.println("================================");
+        
+        ui.start();
     }
 }
